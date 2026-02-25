@@ -3,14 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mini Çevrimiçi Tarayıcı</title>
+    <title>Canvas Destekli Mini Tarayıcı</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app">
       <header>
-        <h1>Mini Çevrimiçi İnternet Tarayıcısı</h1>
-        <p>URL girerek web sitesini görüntüleyin. (Bazı siteler güvenlik nedeniyle iframe içinde açılmaz.)</p>
+        <h1>Canvas Destekli Mini İnternet Tarayıcısı</h1>
+        <p>
+          Üstteki <strong>canvas</strong> alanı gezinme durumunu çizer, alttaki iframe ise sayfayı yüklemeyi dener.
+        </p>
       </header>
 
       <form id="browser-form" class="controls" autocomplete="off">
@@ -30,6 +32,8 @@
         <button data-url="https://www.wikipedia.org" type="button">Wikipedia</button>
         <button data-url="https://developer.mozilla.org" type="button">MDN</button>
       </div>
+
+      <canvas id="browser-canvas" width="1200" height="120" aria-label="Tarayıcı durum paneli"></canvas>
 
       <p id="status" class="status" role="status" aria-live="polite"></p>
 
