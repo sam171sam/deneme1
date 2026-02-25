@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Çevrimiçi Tarayıcı</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>Mini Çevrimiçi İnternet Tarayıcısı</h1>
+        <p>URL girerek web sitesini görüntüleyin. (Bazı siteler güvenlik nedeniyle iframe içinde açılmaz.)</p>
+      </header>
+
+      <form id="browser-form" class="controls" autocomplete="off">
+        <input
+          id="url-input"
+          type="text"
+          name="url"
+          placeholder="https://example.com"
+          aria-label="Web adresi"
+          required
+        />
+        <button type="submit">Git</button>
+      </form>
+
+      <div class="quick-links" aria-label="Hızlı bağlantılar">
+        <button data-url="https://example.com" type="button">Example</button>
+        <button data-url="https://www.wikipedia.org" type="button">Wikipedia</button>
+        <button data-url="https://developer.mozilla.org" type="button">MDN</button>
+      </div>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <section class="viewport-wrap">
+        <iframe
+          id="viewport"
+          title="Mini browser viewport"
+          src="https://example.com"
+          loading="eager"
+          referrerpolicy="no-referrer"
+        ></iframe>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
