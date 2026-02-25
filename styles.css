@@ -1,0 +1,97 @@
+:root {
+  color-scheme: light dark;
+  --bg: #0f172a;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: linear-gradient(180deg, #020617, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+h1 {
+  margin-bottom: 0.25rem;
+}
+
+header p {
+  color: var(--muted);
+  margin-top: 0;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+input,
+button {
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background: #0b1220;
+  color: var(--text);
+}
+
+button {
+  cursor: pointer;
+  background: #14532d;
+  border-color: #166534;
+}
+
+.quick-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.quick-links button {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+#browser-canvas {
+  width: 100%;
+  height: 120px;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  margin-top: 0.9rem;
+  display: block;
+}
+
+.status {
+  color: var(--muted);
+  min-height: 1.25rem;
+  margin-top: 0.75rem;
+}
+
+.viewport-wrap {
+  margin-top: 0.75rem;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #020617;
+}
+
+#viewport {
+  width: 100%;
+  height: 68vh;
+  border: 0;
+  background: white;
+}
