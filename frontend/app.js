@@ -2,19 +2,28 @@ const urlInput = document.getElementById('url-input');
 const contentFrame = document.getElementById('content-frame');
 const fallback = document.getElementById('fallback');
 const fallbackUrl = document.getElementById('fallback-url');
+const externalLink = document.getElementById('open-external-link');
+const statusText = document.getElementById('status-text');
 
 const historyStack = [];
 let currentIndex = -1;
+let fallbackTimer = null;
+
+const setStatus = (message) => {
+  statusText.textContent = `Durum: ${message}`;
+};
 
 const normalizeUrl = (value) => {
-  if (!value) {
+  const trimmed = value.trim();
+
+  if (!trimmed) {
     return null;
   }
 
   try {
-    return new URL(value).toString();
+    return new URL(trimmed).toString();
   } catch {
-    return new URL(`https://${value}`).toString();
+    return new URL(`https://${trimmed}`).toString();
   }
 };
 
@@ -24,10 +33,12 @@ const updateNavButtons = () => {
   document.getElementById('refresh-btn').disabled = currentIndex < 0;
 };
 
-const showFallback = (url) => {
+const showFallback = (url, reason) => {
   contentFrame.classList.add('hidden');
   fallback.classList.remove('hidden');
-  fallbackUrl.textContent = `Açmayı deneyebileceğiniz adres: ${url}`;
+  fallbackUrl.textContent = `Adres: ${url}`;
+  externalLink.href = url;
+  setStatus(reason);
 };
 
 const showFrame = () => {
@@ -35,10 +46,25 @@ const showFrame = () => {
   contentFrame.classList.remove('hidden');
 };
 
+const clearFallbackTimer = () => {
+  if (fallbackTimer) {
+    window.clearTimeout(fallbackTimer);
+    fallbackTimer = null;
+  }
+};
+
 const navigate = (rawUrl, pushHistory = true) => {
-  const normalizedUrl = normalizeUrl(rawUrl);
+  let normalizedUrl;
+
+  try {
+    normalizedUrl = normalizeUrl(rawUrl);
+  } catch {
+    setStatus('Geçersiz URL');
+    return;
+  }
 
   if (!normalizedUrl) {
+    setStatus('URL giriniz');
     return;
   }
 
@@ -50,9 +76,18 @@ const navigate = (rawUrl, pushHistory = true) => {
     currentIndex = historyStack.length - 1;
   }
 
+  clearFallbackTimer();
   showFrame();
   contentFrame.src = normalizedUrl;
+  setStatus('Yükleniyor...');
   updateNavButtons();
+
+  fallbackTimer = window.setTimeout(() => {
+    showFallback(
+      normalizedUrl,
+      'Site iframe içinde engelli olabilir. Önizleme için yeni sekmede açmayı deneyin.'
+    );
+  }, 3500);
 };
 
 document.getElementById('go-btn').addEventListener('click', () => navigate(urlInput.value));
@@ -84,17 +119,13 @@ document.getElementById('refresh-btn').addEventListener('click', () => {
 });
 
 contentFrame.addEventListener('load', () => {
-  const expectedUrl = historyStack[currentIndex];
+  clearFallbackTimer();
+  setStatus('Yüklendi');
+});
 
-  if (!expectedUrl) {
-    return;
-  }
-
-  window.setTimeout(() => {
-    if (contentFrame.src === expectedUrl && contentFrame.contentWindow?.length === 0) {
-      showFallback(expectedUrl);
-    }
-  }, 600);
+contentFrame.addEventListener('error', () => {
+  const activeUrl = historyStack[currentIndex] ?? urlInput.value;
+  showFallback(activeUrl, 'Yükleme hatası oluştu.');
 });
 
 updateNavButtons();

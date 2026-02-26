@@ -20,7 +20,7 @@
           <input
             id="url-input"
             name="url"
-            type="url"
+            type="text"
             placeholder="https://example.com"
             inputmode="url"
             autocomplete="off"
@@ -30,16 +30,36 @@
         <button id="go-btn" type="button" class="go-btn">Git</button>
       </header>
 
-      <section class="viewer" aria-live="polite">
-        <iframe id="content-frame" title="İçerik görüntüleyici" sandbox="allow-scripts allow-forms"></iframe>
-
-        <div id="fallback" class="fallback hidden" role="status">
-          <h2>İçerik görüntülenemedi</h2>
+      <section class="workspace" aria-live="polite">
+        <aside class="info-panel" aria-label="Kullanım notları">
+          <h1>Önizleme Bölmesi</h1>
           <p>
-            Hedef sayfa, <code>X-Frame-Options</code> veya <code>Content-Security-Policy</code>
-            nedeniyle iframe içinde açılmayı engelliyor olabilir.
+            Bu uygulama özellikle önizleme panelinde kullanılacak şekilde tasarlanmıştır.
+            URL girip <strong>Git</strong> butonuna tıklayarak sağ tarafta sayfayı açabilirsiniz.
           </p>
-          <p id="fallback-url"></p>
+          <ul>
+            <li>Geri/İleri/Yenile butonları panel içi gezinme sağlar.</li>
+            <li>Engellenen sitelerde otomatik fallback görünümü açılır.</li>
+            <li>Gerekirse bağlantıyı yeni sekmede açabilirsiniz.</li>
+          </ul>
+          <p id="status-text" class="status-text">Durum: Hazır</p>
+        </aside>
+
+        <div class="viewer" aria-label="Web önizleme alanı">
+          <iframe id="content-frame" title="İçerik görüntüleyici" referrerpolicy="no-referrer"></iframe>
+
+          <div id="fallback" class="fallback hidden" role="status">
+            <h2>İçerik önizleme bölmesinde görüntülenemedi</h2>
+            <p>
+              Hedef site, <code>X-Frame-Options</code> veya
+              <code>Content-Security-Policy: frame-ancestors</code> nedeniyle gömülü açılmayı
+              engelliyor olabilir.
+            </p>
+            <p id="fallback-url" class="fallback-url"></p>
+            <a id="open-external-link" href="#" target="_blank" rel="noreferrer noopener"
+              >Yeni sekmede aç</a
+            >
+          </div>
         </div>
       </section>
     </main>
