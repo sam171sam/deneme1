@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Tarayıcı / Önizleme</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="toolbar" aria-label="Tarayıcı kontrol çubuğu">
+        <button id="backBtn" type="button" aria-label="Geri">←</button>
+        <button id="forwardBtn" type="button" aria-label="İleri">→</button>
+        <button id="reloadBtn" type="button" aria-label="Yenile">⟳</button>
+
+        <form id="navForm" class="address-form">
+          <input
+            id="urlInput"
+            type="text"
+            placeholder="https://example.com"
+            autocomplete="off"
+            aria-label="URL"
+          />
+          <button type="submit">Git</button>
+        </form>
+
+        <button id="openExternalBtn" type="button">Yeni Sekmede Aç</button>
+      </header>
+
+      <section class="preview-tools" aria-label="Önizleme araçları">
+        <h2>Önizleme modu (iframe engeline takılmadan test)</h2>
+        <p>
+          Harici siteler güvenlik nedeniyle gömülü açılamazsa, aşağıdaki HTML editörünü kullanarak
+          anında önizleme alabilirsiniz.
+        </p>
+        <textarea id="htmlInput" aria-label="HTML önizleme içeriği"></textarea>
+        <div class="preview-actions">
+          <button id="previewBtn" type="button">Önizlemeyi Uygula</button>
+          <button id="resetPreviewBtn" type="button">Şablonu Sıfırla</button>
+        </div>
+      </section>
+
+      <section class="canvas-frame" aria-label="Canvas tabanlı tarayıcı görünümü">
+        <canvas id="browserCanvas" width="1200" height="720"></canvas>
+        <iframe
+          id="webView"
+          sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
+          referrerpolicy="no-referrer"
+          title="Web görünümü"
+        ></iframe>
+      </section>
+
+      <p id="statusText" class="note" role="status"></p>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
