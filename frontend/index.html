@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Web Viewer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="toolbar" aria-label="Gezinme araç çubuğu">
+        <div class="nav-buttons">
+          <button id="back-btn" type="button" aria-label="Geri">←</button>
+          <button id="forward-btn" type="button" aria-label="İleri">→</button>
+          <button id="refresh-btn" type="button" aria-label="Yenile">⟳</button>
+        </div>
+
+        <label class="url-field">
+          <span class="sr-only">URL</span>
+          <input
+            id="url-input"
+            name="url"
+            type="text"
+            placeholder="https://example.com"
+            inputmode="url"
+            autocomplete="off"
+          />
+        </label>
+
+        <button id="go-btn" type="button" class="go-btn">Git</button>
+      </header>
+
+      <section class="workspace" aria-live="polite">
+        <aside class="info-panel" aria-label="Kullanım notları">
+          <h1>Önizleme Bölmesi</h1>
+          <p>
+            Bu uygulama özellikle önizleme panelinde kullanılacak şekilde tasarlanmıştır.
+            URL girip <strong>Git</strong> butonuna tıklayarak sağ tarafta sayfayı açabilirsiniz.
+          </p>
+          <ul>
+            <li>Geri/İleri/Yenile butonları panel içi gezinme sağlar.</li>
+            <li>Engellenen sitelerde otomatik fallback görünümü açılır.</li>
+            <li>Gerekirse bağlantıyı yeni sekmede açabilirsiniz.</li>
+          </ul>
+          <p id="status-text" class="status-text">Durum: Hazır</p>
+        </aside>
+
+        <div class="viewer" aria-label="Web önizleme alanı">
+          <iframe id="content-frame" title="İçerik görüntüleyici" referrerpolicy="no-referrer"></iframe>
+
+          <div id="fallback" class="fallback hidden" role="status">
+            <h2>İçerik önizleme bölmesinde görüntülenemedi</h2>
+            <p>
+              Hedef site, <code>X-Frame-Options</code> veya
+              <code>Content-Security-Policy: frame-ancestors</code> nedeniyle gömülü açılmayı
+              engelliyor olabilir.
+            </p>
+            <p id="fallback-url" class="fallback-url"></p>
+            <a id="open-external-link" href="#" target="_blank" rel="noreferrer noopener"
+              >Yeni sekmede aç</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
